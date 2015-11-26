@@ -72,7 +72,18 @@ class RedPackets(object):
 
         return split_list
 
+    def cent(self, dollar, rate=100):
+        """
+        In [1]: 0.07 * 100
+        Out[1]: 7.000000000000001
+        :param dollar:
+        :param rate:
+        :return:
+        """
+        return int(Decimal(str(dollar)) * rate)
+
 
 # For backwards compatibility
 _global_instance = RedPackets()
 split = _global_instance.split
+cent = _global_instance.cent
