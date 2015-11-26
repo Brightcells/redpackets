@@ -76,6 +76,7 @@ class RedPackets(object):
         """
         In [1]: 0.07 * 100
         Out[1]: 7.000000000000001
+        Exchange Dollar into Cent
         :param dollar:
         :param rate:
         :return:

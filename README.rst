@@ -20,3 +20,6 @@ Usage
     import redpackets
 
     redpackets.split(total, num, min=0.01)
+
+    redpackets.cent(dollar, rate=100)
+
