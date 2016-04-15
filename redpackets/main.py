@@ -33,9 +33,9 @@ import random
 from .compat import range
 
 
-ZERO_VALUE = 'Zero Value of Param {0}'
-INVALID_VALUE = 'Invalid Value for Num: \'{0}\''
-TRIPLE_INVALID_VALUE = 'Invalid Value for Total-{0}, Num-{1}, Min-{2}'
+ZERO_VALUE = 'Zero Value of Param {}'
+INVALID_VALUE = 'Invalid Value for Num: \'{}\''
+TRIPLE_INVALID_VALUE = 'Invalid Value for Total-{}, Num-{}, Min-{}'
 
 
 class RedPackets(object):
@@ -152,7 +152,6 @@ class RedPackets(object):
         return cent / 100
 
 
-# For backwards compatibility
 _global_instance = RedPackets()
 split_dollor = _global_instance.split_dollor
 split_cent = _global_instance.split_cent

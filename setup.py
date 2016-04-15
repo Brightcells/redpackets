@@ -11,7 +11,7 @@ setup(
     name='redpackets',
     version=version,
     keywords='',
-    description="Red Packets Split Algorithm",
+    description='Red Packets Split Algorithm',
     long_description=open('README.rst').read(),
 
     url='https://github.com/Brightcells/redpackets',
