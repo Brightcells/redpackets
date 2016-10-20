@@ -1,34 +1,9 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-"""
-Copyright (c) 2015 HQM <qiminis0801@gmail.com>
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-'Software'), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-"""
 
 from __future__ import division
 
-from decimal import Decimal
-
 import random
+from decimal import Decimal
 
 from .compat import range
 
@@ -39,12 +14,22 @@ TRIPLE_INVALID_VALUE = 'Invalid Value for Total-{}, Num-{}, Min-{}'
 
 
 class RedPackets(object):
-    def split_dollor_val(self, min, max):
-        return min if min > max else Decimal(str(random.randint(min, max)))
-
-    def split_dollor(self, total, num, min=0.01):
+    def decimal(self, value):
         """
-        RedPackets Split for Dollor
+        In [1]: Decimal(3.14)
+        Out[1]: Decimal('3.140000000000000124344978758017532527446746826171875')
+
+        In [2]: Decimal(str(3.14))
+        Out[2]: Decimal('3.14')
+        """
+        return Decimal(str(value))
+
+    def split_dollar_val(self, min, max):
+        return min if min > max else self.decimal(random.randint(min, max))
+
+    def split_dollar(self, total, num, min=0.01):
+        """
+        RedPackets Split for Dollar
 
         :param total: Total Value of RedPackets
         :param num: Split Num of RedPackets
@@ -54,15 +39,15 @@ class RedPackets(object):
             raise ValueError(ZERO_VALUE.format('Num' if total else 'Total'))
 
         # Convert and Check of Total
-        total = Decimal(str(total))
+        total = self.decimal(total)
 
         # Convert and Check of Num
         if isinstance(num, float) and int(num) != num:
             raise ValueError(INVALID_VALUE.format(num))
-        num = Decimal(str(int(num)))
+        num = self.decimal(int(num))
 
         # Convert and Check of Min
-        min = Decimal(str(min))
+        min = self.decimal(min)
 
         # Compare Total and Num * Min
         if total < num * min:
@@ -72,7 +57,7 @@ class RedPackets(object):
         for i in range(1, int(num)):
             # Random Safety High Limit Total
             safe_total = (total - (num - i) * min) / (num - i)
-            split_val = self.split_dollor_val(min * 100, int(safe_total * 100)) / 100
+            split_val = self.split_dollar_val(min * 100, int(safe_total * 100)) / 100
             total -= split_val
             split_list.append(split_val)
         split_list.append(total)
@@ -119,16 +104,16 @@ class RedPackets(object):
 
     def split(self, total, num, min=None, cent=False):
         """
-        RedPackets Split for Dollor or Cent
+        RedPackets Split for Dollar or Cent
 
         :param total: Total Value of RedPackets
         :param num: Split Num of RedPackets
         :param min: Limit Value of Each Split
-        :param cent: Split for Dollor or Cent
+        :param cent: Split for Dollar or Cent
         """
-        return self.split_cent(total, num, min or 1) if cent else self.split_dollor(total, num, min or 0.01)
+        return self.split_cent(total, num, min or 1) if cent else self.split_dollar(total, num, min or 0.01)
 
-    def cent(self, dollar, rate=100):
+    def cent(self, dollar, rate=100, cast_func=int):
         """
         Exchange Dollar into Cent
 
@@ -139,22 +124,39 @@ class RedPackets(object):
         :param rate:
         :return:
         """
-        return int(Decimal(str(dollar)) * rate)
+        return self.mul(dollar, rate, cast_func=cast_func)
 
-    def dollor(self, cent, rate=100):
+    def dollar(self, cent, rate=100, cast_func=float):
         """
-        Exchange Cent into Dollor
+        Exchange Cent into Dollar
 
         :param cent:
         :param rate:
         :return:
         """
-        return cent / 100
+        return self.div(cent, rate, cast_func=cast_func)
+
+    def mul(self, multiplicand, multiplicator, cast_func=float):
+        """
+        8 × 3 = 24, 8 is multiplicand, 3 is multiplicator.
+        """
+        return cast_func(self.decimal(multiplicand) * self.decimal(multiplicator))
+
+    def div(self, dividend, divisor, cast_func=float):
+        """
+        24 ÷ 8 = 3, 24 is dividend, 8 is divisor.
+        """
+        return cast_func(self.decimal(dividend) / self.decimal(divisor))
 
 
 _global_instance = RedPackets()
-split_dollor = _global_instance.split_dollor
+split_dollar = _global_instance.split_dollar
 split_cent = _global_instance.split_cent
 split = _global_instance.split
 cent = _global_instance.cent
-dollor = _global_instance.dollor
+dollar = _global_instance.dollar
+mul = _global_instance.mul
+div = _global_instance.div
+# Spelling mistake. For backwards compatibility
+split_dollor = _global_instance.split_dollar
+dollor = _global_instance.dollar

@@ -4,4 +4,7 @@ from redpackets.main import (
     split,
     cent,
     dollor,
+    dollar,
+    mul,
+    div,
 )

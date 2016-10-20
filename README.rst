@@ -19,15 +19,18 @@ Usage
 
     import redpackets
 
-    redpackets.split_dollor(total, num, min=0.01):
-
-    redpackets.split_cent(total, num, min=0.01):
-
-    # cent=False equals split_dollor
+    # Redpackets Split
+    redpackets.split_dollar(total, num, min=0.01)
+    redpackets.split_cent(total, num, min=1)
+    # cent=False equals split_dollar
     # cent=True equals split_cent
     redpackets.split(total, num, min=None, cent=False)
 
-    redpackets.cent(dollar, rate=100)
+    # Exchange Cent & Dollar
+    redpackets.cent(dollar, rate=100, cast_func=int)
+    redpackets.dollar(cent, rate=100, cast_func=float)
 
-    redpackets.dollor(cent, rate=100)
+    # Mul & Div
+    redpackets.mul(multiplicand, multiplicator, cast_func=float)
+    redpackets.div(dividend, divisor, cast_func=float)
 
