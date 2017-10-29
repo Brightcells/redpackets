@@ -7,4 +7,4 @@
 #  -- E501 line too long
 #  -- E701  multiple statements on one line
 
-pycodestyle --exclude=migrations --ignore=E128,E501,E701 .
+pycodestyle --exclude=build,migrations,.tox --ignore=E128,E501,E701 .

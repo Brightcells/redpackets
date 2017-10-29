@@ -1,22 +1,30 @@
-*.db
-*.pyc
 *.swp
-*.idea
-*.sqlite3
-*.DS_Store
+
+# Compiled python modules
+*.pyc
+*.pyo
+
+# Setuptools distribution folder
+build
+dist
+*.egg-info
+
+# Pyenv
 *.python-version
 
-build
+# Pytest
+.cache
+.coverage
 
-# Compiled python modules.
-*.pyc
+# Tox
+.tox
 
-# Setuptools distribution folder.
-/dist/
+# Database
+*.db
+*.sqlite3
 
-# Python egg metadata, regenerated from source files by setuptools.
-/*.egg-info
-/*.egg
+# IDE
+*.idea
 
-# Pytest cache
-/.cache/
+# OS
+*.DS_Store
