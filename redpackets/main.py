@@ -153,8 +153,8 @@ _global_instance = RedPackets()
 split_dollar = split_Yuan = _global_instance.split_dollar
 split_cent = split_Fen = _global_instance.split_cent
 split = _global_instance.split
-cent = Fen = cent2dollar = Yuan2Fen = _global_instance.cent
-dollar = Yuan = dollar2cent = Fen2Yuan = _global_instance.dollar
+cent = Fen = dollar2cent = Yuan2Fen = _global_instance.cent
+dollar = Yuan = cent2dollar = Fen2Yuan = _global_instance.dollar
 mul = _global_instance.mul
 div = _global_instance.div
 # Spelling mistake. For backwards compatibility
